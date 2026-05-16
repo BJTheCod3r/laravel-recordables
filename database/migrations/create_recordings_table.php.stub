@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        $tableName = config('recordables.table_name', 'recordings');
+        $primaryKey = config('recordables.primary_key', 'id');
+
+        Schema::create($tableName, function (Blueprint $table) use ($primaryKey) {
+            if ($primaryKey === 'ulid') {
+                $table->ulid('id')->primary();
+            } else {
+                $table->id();
+            }
+
+            $table->morphs('recordable');
+
+            $table->json('data');
+
+            $table->string('change_type')->nullable();
+            $table->string('change_source')->nullable();
+
+            $table->nullableMorphs('causer');
+
+            $table->timestamp('recorded_at')->index();
+            $table->timestamps();
+
+            $table->index(
+                ['recordable_type', 'recordable_id', 'recorded_at'],
+                'recordings_recordable_recorded_at_index'
+            );
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists(config('recordables.table_name', 'recordings'));
+    }
+};

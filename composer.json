@@ -1,0 +1,65 @@
+{
+    "name": "bjthecod3r/laravel-recordables",
+    "description": "Record snapshots of Eloquent model data over time.",
+    "keywords": [
+        "laravel",
+        "eloquent",
+        "snapshots",
+        "history",
+        "metrics",
+        "analytics"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bolaji Ajani",
+            "email": "bolajiajani2@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/database": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/events": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^11.0 || ^12.0 || ^13.0",
+        "nesbot/carbon": "^2.0 || ^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BJTheCod3r\\Recordables\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BJTheCod3r\\Recordables\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BJTheCod3r\\Recordables\\RecordablesServiceProvider"
+            ],
+            "aliases": {
+                "Recordables": "BJTheCod3r\\Recordables\\Facades\\Recordables"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

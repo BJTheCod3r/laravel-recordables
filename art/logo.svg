@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Laravel Recordables">
+  <!-- App-icon rounded square in Laravel red -->
+  <rect width="256" height="256" rx="56" ry="56" fill="#FF2D20"/>
+
+  <!-- Pulse ring behind the recording indicator — suggests active capture -->
+  <circle cx="200" cy="76" r="34" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="6"/>
+
+  <!-- Trend sparkline: snapshots growing over time -->
+  <polyline
+    points="56,196 104,144 152,168 200,76"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Earlier snapshot points -->
+  <g fill="#FFFFFF">
+    <circle cx="56"  cy="196" r="11"/>
+    <circle cx="104" cy="144" r="11"/>
+    <circle cx="152" cy="168" r="11"/>
+  </g>
+
+  <!-- Leading point: stylized camera-lens / REC indicator (concentric rings) -->
+  <circle cx="200" cy="76" r="22" fill="#FFFFFF"/>
+  <circle cx="200" cy="76" r="16" fill="#FF2D20"/>
+  <circle cx="200" cy="76" r="10" fill="#FFFFFF"/>
+  <circle cx="200" cy="76" r="5"  fill="#FF2D20"/>
+</svg>
