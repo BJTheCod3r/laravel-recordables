@@ -5,6 +5,8 @@ declare(strict_types=1);
 use BJTheCod3r\Recordables\Events\RecordingCreated;
 use BJTheCod3r\Recordables\Events\RecordingCreating;
 use BJTheCod3r\Recordables\Tests\Fixtures\Product;
+use BJTheCod3r\Recordables\Tests\Fixtures\ProductStatus;
+use BJTheCod3r\Recordables\Tests\Fixtures\ReleasedProduct;
 use BJTheCod3r\Recordables\Tests\Fixtures\User;
 use Illuminate\Support\Facades\Event;
 
@@ -106,4 +108,18 @@ it('recordIfChanged skips when latest matches current snapshot', function () {
 
     expect($result)->toBeNull();
     expect($product->refresh()->recordings)->toHaveCount($countBefore);
+});
+
+it('recordIfChanged compares cast attributes by their stored form', function () {
+    $product = ReleasedProduct::create(['name' => 'Widget', 'status' => ProductStatus::Draft, 'released_at' => '2026-05-01 09:30:00']);
+    $product->record();
+
+    expect($product->refresh()->recordIfChanged())->toBeNull();
+    expect($product->recordings()->count())->toBe(1);
+
+    $product->update(['status' => ProductStatus::Live]);
+
+    expect($product->recordIfChanged())->not->toBeNull();
+    expect($product->recordings()->count())->toBe(2);
+    expect($product->latestRecording()?->data['status'])->toBe('live');
 });
