@@ -218,11 +218,27 @@ trait HasRecordings
         $latest = $this->latestRecording();
         $current = $this->toRecording();
 
-        if ($latest && $latest->data == $current) {
+        if ($latest && $latest->data == $this->asStored($current)) {
             return null;
         }
 
         return $this->record($current, $changeType, $changeSource, $causer);
+    }
+
+    /**
+     * The snapshot as it reads back from the `data` column.
+     *
+     * `toRecording()` returns cast values (backed enums, dates, value
+     * objects) while a stored recording holds their JSON form, and an enum
+     * never loosely equals its string value. Round-tripping through JSON
+     * puts both sides in the same shape before comparing.
+     *
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    protected function asStored(array $data): array
+    {
+        return (array) json_decode((string) json_encode($data), true);
     }
 
     /**

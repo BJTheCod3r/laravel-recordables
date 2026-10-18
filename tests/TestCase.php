@@ -45,6 +45,8 @@ abstract class TestCase extends Orchestra
             $table->integer('stock')->default(0);
             $table->integer('views')->default(0);
             $table->integer('non_recordable_column')->default(0);
+            $table->string('status')->nullable();
+            $table->timestamp('released_at')->nullable();
             $table->timestamps();
         });
 
